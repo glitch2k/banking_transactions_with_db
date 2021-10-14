@@ -69,6 +69,30 @@ class Transaction():
         print(verify.lname)
         print(verify.chk_bal)
 
+    def withdraw(self):
+        # verify if member has enough money to perform withdraw
+        if self.trans_amt > self.chk_bal:
+            print('the member does not have enough money to perform this withdraw')
+            print('please ensure withdraw amount is less than member\'s balance displayed below')
+            print(self.chk_bal)
+            print('\n' *5)
+            return
+        else:
+            self.chk_bal = self.chk_bal - self.trans_amt
+            mem.chk_bal = self.chk_bal
+            db.session.commit()
+            verify = Member.query.filter_by(id=mem_id).first()
+            print('\n' *2)
+            print(verify.fname)
+            print(verify.lname)
+            print(verify.chk_bal)
+            print('\n' *5)
+            return
+
+
+
+
+
 
 
     
@@ -106,6 +130,7 @@ if menu_1 == 'a':
     print('for member withdraw     => b')
     menu_2 = input('enter choice : ')
 
+    # CODE TO PERFORM A DEPOSIT
     if menu_2 == 'a':
         # request amount to deposit
         print('enter amount member is depositing')
@@ -118,6 +143,22 @@ if menu_1 == 'a':
 
         trans_obj = Transaction(mem.id, mem.fname, mem.lname, mem.chk_bal, dep_amt)
         trans_obj.deposit()
+
+    # CODE TO PERFORM A WITHDRAW
+    if menu_2 == 'b':
+        # request amount to withdraw
+        print('enter amount member is withdrawing')
+        dep_amt = int(input(': '))
+
+        # create deposit object with member in-memory object & the amount entered
+        # ...by user, then perform the deposit action using the deposit method,
+        # ...update the member's in-memory object accont balance property,
+        # ... then commit the member's in-memory object into the db
+
+        trans_obj = Transaction(mem.id, mem.fname, mem.lname, mem.chk_bal, dep_amt)
+        trans_obj.withdraw()
+    
+
 
 
     
