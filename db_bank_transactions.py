@@ -76,7 +76,7 @@ class Transaction():
             print('please ensure withdraw amount is less than member\'s balance displayed below')
             print(self.chk_bal)
             print('\n' *5)
-            return
+            # return
         else:
             self.chk_bal = self.chk_bal - self.trans_amt
             mem.chk_bal = self.chk_bal
@@ -87,7 +87,7 @@ class Transaction():
             print(verify.lname)
             print(verify.chk_bal)
             print('\n' *5)
-            return
+            # return
 
 
 
