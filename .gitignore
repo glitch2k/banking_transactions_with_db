@@ -1,6 +1,7 @@
 # custom ignore inputs
 bank_tracn/
-
+scrap_paper
+sqlalchemy_queries.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
