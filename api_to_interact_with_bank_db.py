@@ -53,7 +53,7 @@ class MemInfo(Resource):
 		result = Member.query.filter_by(id=mem_id).first() # this will return an object
 		if not result:
 			abort(404, message="Could not find member with that id")
-		return result.lname
+		return result
 
 class BankBalance(Resource):
 	# bank_bal = 0
