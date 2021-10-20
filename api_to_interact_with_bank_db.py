@@ -20,8 +20,8 @@ class Member(db.Model):
 	lname = db.Column(db.String(100), nullable=False)
 	chk_bal = db.Column(db.Integer, nullable=False)
 
-    # this create a user-friendly string that will display to describe
-    # ...a record from the database if it is called via code
+	# this create a user-friendly string that will display to describe
+	# ...a record from the database if it is called via code
 	# def __repr__(self):
 	# 	return f"member(name = {name}, views = {views}, likes = {likes})"
 
@@ -68,11 +68,11 @@ class BankBalance(Resource):
 
 
 	# def get(self):
-    #     accts = Member.query.all()
+	#     accts = Member.query.all()
 	# 	for acct in accts:
-    #     	bank_bal = acct.chk_bal + bank_bal
-    #     # result = jsonify(accts)
-    #     return bank_bal
+	#     	bank_bal = acct.chk_bal + bank_bal
+	#     # result = jsonify(accts)
+	#     return bank_bal
 
 
 # this ties the api endpoint to the a pattern that will be received in from the url request
