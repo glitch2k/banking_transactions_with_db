@@ -1,12 +1,12 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
-import jsonify
+import jsonify, json
 
 app = Flask(__name__)
 api = Api(app)
 # this will config the sqlite3 database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////data/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/database.db'
 db = SQLAlchemy(app)
 
 
@@ -66,6 +66,22 @@ class BankBalance(Resource):
 			bank_bal = acct.chk_bal + bank_bal
 		return {"total bank balance": bank_bal}
 
+
+class CreateNewMem(Resource):
+	def post(self):
+		new_mem = request.get_json()
+		fname = new_mem['fname']
+		lname = new_mem['lname']
+		chk_bal = new_mem['chk_bal']
+
+		new_mem_db = Member(fname=fname, lname=lname, chk_bal=chk_bal)
+		db.session.add(new_mem_db)
+		db.session.commit()
+		return {"message": "member added"}
+		
+		
+
+
 class InitiatNewDB(Resource):
 	# bank_bal = 0
 	# @marshal_with(total_bal_return)
@@ -90,6 +106,8 @@ class InitiatNewDB(Resource):
 api.add_resource(MemInfo, "/member/<int:mem_id>")
 api.add_resource(BankBalance, "/bank_bal")
 api.add_resource(InitiatNewDB, "/initiatnewdb")
+api.add_resource(CreateNewMem, "/createmem")
 
 if __name__ == "__main__":
-	app.run(debug=True, host='0.0.0.0')
+	# app.run(debug=True, host='0.0.0.0')
+	app.run(debug=True)
