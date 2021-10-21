@@ -94,6 +94,23 @@ class Deposit(Resource):
 		verify = Member.query.filter_by(id=mem_id).first()
 		return {"New balance": verify.chk_bal}
 		
+class Withdraw(Resource):
+	def post(self, mem_id):
+		json_body = request.get_json()
+		wit_amt = int(json_body['amt'])
+		find_mem = Member.query.filter_by(id=mem_id).first()
+		if not find_mem:
+			abort(404, message="Could not find member with supplied ID")
+
+		if find_mem.chk_bal < wit_amt:
+			abort(404, message="Member does not have enough funds to withdraw")
+			
+		find_mem.chk_bal = find_mem.chk_bal - wit_amt
+		db.session.add(find_mem)
+		db.session.commit()
+
+		verify = Member.query.filter_by(id=mem_id).first()
+		return {"New balance": verify.chk_bal}
 		
 
 
@@ -123,7 +140,7 @@ api.add_resource(BankBalance, "/bank_bal")
 api.add_resource(InitiatNewDB, "/initiatnewdb")
 api.add_resource(CreateNewMem, "/createmem")
 api.add_resource(Deposit, "/deposit/<int:mem_id>")
-
+api.add_resource(Withdraw, "/withdraw/<int:mem_id>")
 
 if __name__ == "__main__":
 	# app.run(debug=True, host='0.0.0.0')
