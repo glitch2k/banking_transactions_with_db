@@ -1,0 +1,6 @@
+docker run \
+--name db_with_api \
+-v bank_db_vol:/data \
+-p 5000:5000 \
+-d \
+db_with_api_img

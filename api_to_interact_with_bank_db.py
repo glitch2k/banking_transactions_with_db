@@ -6,7 +6,7 @@ import jsonify
 app = Flask(__name__)
 api = Api(app)
 # this will config the sqlite3 database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////data/database.db'
 db = SQLAlchemy(app)
 
 
@@ -66,6 +66,13 @@ class BankBalance(Resource):
 			bank_bal = acct.chk_bal + bank_bal
 		return {"total bank balance": bank_bal}
 
+class InitiatNewDB(Resource):
+	# bank_bal = 0
+	# @marshal_with(total_bal_return)
+	def get(self):
+		db.create_all()
+		return {"message": "New DB Initiated"}
+
 
 	# def get(self):
 	#     accts = Member.query.all()
@@ -82,6 +89,7 @@ class BankBalance(Resource):
 # ...further processing 
 api.add_resource(MemInfo, "/member/<int:mem_id>")
 api.add_resource(BankBalance, "/bank_bal")
+api.add_resource(InitiatNewDB, "/initiatnewdb")
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0')
