@@ -6,7 +6,8 @@ import jsonify, json
 app = Flask(__name__)
 api = Api(app)
 # this will config the sqlite3 database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/database.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/database.db' # use this config when running app WITHOUT containers
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////data/database.db'
 db = SQLAlchemy(app)
 
 
@@ -143,5 +144,5 @@ api.add_resource(Deposit, "/deposit/<int:mem_id>")
 api.add_resource(Withdraw, "/withdraw/<int:mem_id>")
 
 if __name__ == "__main__":
-	# app.run(debug=True, host='0.0.0.0')
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0')
+	# app.run(debug=True) # use this config when running app WITHOUT containers
