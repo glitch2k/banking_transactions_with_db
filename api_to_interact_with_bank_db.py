@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template, make_response
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
 import jsonify, json
@@ -113,6 +113,10 @@ class Withdraw(Resource):
 		return {"New balance": verify.chk_bal}
 		
 
+class ReturnHomePage(Resource):
+	# @marshal_with(mem_info_return)
+	def get(self): # "mem_id" will hold the value to perform the query with
+		return make_response(render_template('home.html')) # use the 'make_response' function when returning to web broswer
 
 class InitiatNewDB(Resource):
 	# bank_bal = 0
@@ -141,6 +145,7 @@ api.add_resource(InitiatNewDB, "/initiatnewdb")
 api.add_resource(CreateNewMem, "/createmem")
 api.add_resource(Deposit, "/deposit/<int:mem_id>")
 api.add_resource(Withdraw, "/withdraw/<int:mem_id>")
+api.add_resource(ReturnHomePage, "/")
 
 if __name__ == "__main__":
 	# app.run(debug=True, host='0.0.0.0')

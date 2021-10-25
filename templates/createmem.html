@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>
+        Create New Member Account
+        <form action="#" method="post">
+            <p>
+                {{form.fname.label}} <br>
+                {{form.fname}}
+            </p>
+            <p>
+                {{form.lname.label}} <br>
+                {{form.lname}}
+            </p>
+            <p>
+                {{form.chk_bal.label}} <br>
+                {{form.chk_bal}}
+            </p>
+            <p>
+                {{form.submit}}
+            </p>
+        </form>
+    </h2>
+
+{% endblock %}
